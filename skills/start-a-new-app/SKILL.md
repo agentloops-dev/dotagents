@@ -1,11 +1,11 @@
 ---
 name: start-a-new-app
-description: Take a new app from the person's first words to its first approved deploy - ask the kind of app and its name, make its private GitHub repository from a starter, the deploy gates, then Apple, Google Cloud and Sentry as the app needs them, one card at a time, tag v0.1.0 and wait for the person to approve the deploy in Needs You. Use when a person asks for a new app ("make me an app that …"), in voice mode or typed, or asks to go on with one that stopped.
+description: Take a new app from the person's first words to its first approved deploy - ask the kind of app and its name, make its private GitHub repository from a starter, then Apple, Google Cloud and Sentry as the app needs them, one card at a time, tag v0.1.0 and wait for the person to approve the deploy in Needs You. Use when a person asks for a new app ("make me an app that …"), in voice mode or typed, or asks to go on with one that stopped.
 ---
 
 # Start a new app
 
-The person says the app they want. You make its repository and its deploy gates, walk the
+The person says the app they want. You make its repository, walk the
 person through each outside account with one card at a time, put each secret into the
 repository's CI, and tag the first version. The person approves the first deploy.
 
@@ -144,14 +144,11 @@ the repository is then the person's step:
 
 ## 3. The gates
 
-Call `set_environment_gate` on each repository, with the person's GitHub login as the one
-reviewer:
-
-- iPhone app: `testflight` and `app-store`;
-- web service: `production`.
-
-Nothing deploys until the person approves it. Calling it again on a gate that is there
-changes nothing.
+There is nothing to set. Nothing deploys until the person approves it: on a version tag, the
+starter's `release.yml` makes a GitHub Deployment that waits for the person's approval in
+**Needs You** (`testflight` and `app-store` for an iPhone app, `production` for a web
+service), on any GitHub plan. Do not call `set_environment_gate`: GitHub Free refuses an
+environment's required reviewers on a private repository.
 
 ## 4. Apple (an iPhone app)
 
@@ -304,11 +301,13 @@ For each repository:
 2. **The approval.** Wait with `wait_for_event` on `deploy.waiting`, `where: {"repo":
    "<owner>/<repo>"}`. Then tell the person: `The first deploy waits for you: open Needs
    You, choose Deploy, read what ships, and choose Approve.` Only the person can approve.
-   For an iPhone app, `release.yml` waits at `testflight`, and `app-store.yml` waits at
-   `app-store`: say that the App Store one sends the version to App Review, so they approve
-   it only when they want that. They can choose **Reject**.
+   For an iPhone app, two deploys wait: `testflight.yml` to `testflight`, and
+   `app-store.yml` to `app-store`. Say that the App Store one sends the version to App
+   Review, so they approve it only when they want that. They can choose **Reject**.
 3. **The result.** Wait with `wait_for_event` on `run.completed`, `where: {"repo":
-   "<owner>/<repo>", "branch": "v0.1.0"}`. When its conclusion is `success`, say what it
+   "<owner>/<repo>", "branch": "v0.1.0", "workflow": "<the workflow>"}`: `testflight.yml`
+   for an iPhone app, `deploy.yml` for a web service. `release.yml`'s own run on the tag
+   only asks for the approval. When its conclusion is `success`, say what it
    deployed (its `deploys`: a TestFlight build, or the Cloud Run revision), and that Lineage
    shows the release, the run and the deploy. When it failed, read `failed_log`, say why in
    one line, correct what is in your part (a CI secret or variable), and run the failed
