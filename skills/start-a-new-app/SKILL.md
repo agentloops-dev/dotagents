@@ -127,6 +127,21 @@ repository, pushes the starter as its first commit, clones it on this machine an
 as a folder. It skips what is there already, so after a failure, call it again once. When
 it fails again, stop (the rules above).
 
+**When GitHub does not let the connection make it** (the GitHub App cannot make
+repositories), nothing is made, and the answer gives two addresses: `github.com/new` from
+the template, private, with the name filled in, and the GitHub App's install page. Making
+the repository is then the person's step:
+
+1. Open the first address with `browser_navigate`.
+2. Call `hand_to_person`: ask the person to choose **Create repository** there, then to
+   install the GitHub App on the new repository at the second address (**Only select
+   repositories**, then the new one).
+3. When the person answers **Done**, call `make_app_repository` again with the same
+   arguments. It fills in the starter's values over the template's files, clones it and
+   adds it as a folder. When it gives the same answer again, the repository is not
+   there or the App is not installed on it: give the person the card again, once, then
+   stop (the rules above).
+
 ## 3. The gates
 
 Call `set_environment_gate` on each repository, with the person's GitHub login as the one
