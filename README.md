@@ -18,7 +18,6 @@ The layout is the same as `~/.agents`:
 | `address-review-comments` | Answers or fixes each open review comment on a pull request or merge request, on its own branch, and pushes. |
 | `answer-a-sign-up-code` | Reads a sign-up or sign-in code from a mail from an allowed sender, and gives it to the session that waits for it. |
 | `daily-checks` | Looks at the folders that had no work since the last check: failing CI, stale pull requests, issues with no session. |
-| `daily-summary` | Writes the person's daily summary: what landed, what failed or stopped, what waits on them, and what to do next. |
 | `file-a-bug-from-sentry` | Files a bug for a new or regressed Sentry issue, or comments on the issue that tracks it, with no secrets in it. |
 | `fix-failed-checks` | Finds why a pull request's checks failed, fixes it on its branch and pushes, or runs the failed jobs again. |
 | `work-a-jira-issue` | Does the work that a Jira issue asks for, and opens a pull request for it. |

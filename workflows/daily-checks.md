@@ -9,6 +9,9 @@ on:
       between: "04:00-04:00"
   - schedule:
       at: ":00"
+      between: "08:00-08:00"
+  - schedule:
+      at: ":00"
       between: "12:00-12:00"
   - schedule:
       at: ":00"
