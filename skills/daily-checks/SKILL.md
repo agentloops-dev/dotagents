@@ -5,10 +5,10 @@ description: Look at the folders on this machine that had no work since the last
 
 # Daily checks
 
-Between daily summaries, you look at the folders that nobody worked in and find what waits
+Every few hours, you look at the folders that nobody worked in and find what waits
 there. You only read. Do not push, comment, message, start a session or change a file, also
 when a fix looks easy: the person decides. The `check_folders` tool keeps what you find:
-the sidebar's For Review lists it, with Start and Dismiss, and the next daily summary too.
+the sidebar's For Review lists it, with Start and Dismiss.
 
 1. **Get the facts.** Call `check_folders` with `action: collect`. For each quiet folder it
    lists what looks wrong, each with its link. When it says nothing looks wrong, end.
@@ -21,8 +21,8 @@ the sidebar's For Review lists it, with Start and Dismiss, and the next daily su
    - `prompt`: what a new session in that folder is told to do, such as "Find why the
      Build workflow fails on main since 14:02 and fix it on a branch: <link>";
    - `link`: the finding's link;
-   - `urgent: true` only when it should not wait for the summary, such as a broken default
-     branch or a release that cannot ship.
+   - `urgent: true` only when the person must know at once, such as a broken default
+     branch or a release that cannot ship: a notice goes out too.
    Put findings of one kind in one folder together as one suggestion.
    When `check_folders` says the person dismissed one before, leave it: it is not kept.
 4. **End.** Say in one line how many suggestions you kept. Do not ask anything.
