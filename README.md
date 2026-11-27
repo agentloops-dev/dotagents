@@ -31,6 +31,18 @@ The layout is the same as `~/.agents`:
 | `map-a-docs-server` | Writes the map of a docs MCP server's search and read tools (Confluence, Notion, Google Drive, a wiki), so its first search can prove it. |
 | `start-a-new-app` | Takes a new app from the first question to its first approved deploy: the repository from a starter, the deploy gates, and the accounts. |
 
+## Machine scripts
+
+`scripts/root.sh` and `scripts/setup.sh` are examples of the two machine scripts of
+[Agents](https://github.com/alexec/Agents): New root.sh and New setup.sh in Settings ▸ Machines
+▸ Machine scripts write them into `~/.agents/machine-setup/`, where they are yours to edit.
+Nothing runs until you approve them.
+
+| Script | Runs as | What the example does |
+|---|---|---|
+| `root.sh` | root, once, on a new machine's first boot | Installs the GitHub CLI `gh` with apt, from GitHub's own package source. It does nothing when `gh` is there, and only says so on a machine with no apt. |
+| `setup.sh` | your user, after the machine joins | Signs `gh` in with the secret `GH_TOKEN`, which it declares (`# secrets: GH_TOKEN`) and reads with `agents-secret`, on stdin, so the token is in no command line or log. Then `gh auth setup-git`. |
+
 ## Use them without Agents
 
 Copy what you want into your own `~/.agents`, or into a project's `.agents`:
